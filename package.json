@@ -1,0 +1,15 @@
+{
+  "name": "kicad-lib-chainer",
+  "version": "1.0.0",
+  "description": "Convert old KiCad library tables to chained format",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node tests/transformer_test.js",
+    "fmt": "prettier --write .",
+    "fmt:check": "prettier --check ."
+  },
+  "devDependencies": {
+    "prettier": "^3"
+  }
+}

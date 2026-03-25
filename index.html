@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KiCad Lib Chainer</title>
+    <link rel="icon" type="image/svg+xml" href="images/chain.svg" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      :root {
+        --bg: #f5f5f5;
+        --surface: #ffffff;
+        --border: #d0d0d0;
+        --text: #1a1a1a;
+        --text-muted: #666;
+        --accent: #2563eb;
+        --accent-hover: #1d4ed8;
+        --error: #dc2626;
+        --success: #16a34a;
+        --btn-primary-text: #fff;
+        --btn-secondary-bg: #e5e7eb;
+        --btn-secondary-hover: #d1d5db;
+        --mono: 'Cascadia Code', 'Fira Code', 'JetBrains Mono', 'Consolas', monospace;
+      }
+
+      @media (prefers-color-scheme: dark) {
+        :root {
+          --bg: #1a1a1a;
+          --surface: #2a2a2a;
+          --border: #444;
+          --text: #e5e5e5;
+          --text-muted: #999;
+          --accent: #60a5fa;
+          --accent-hover: #93c5fd;
+          --error: #f87171;
+          --success: #4ade80;
+          --btn-primary-text: #1a1a1a;
+          --btn-secondary-bg: #3a3a3a;
+          --btn-secondary-hover: #4a4a4a;
+        }
+      }
+
+      body {
+        margin: 0;
+        font-family:
+          system-ui,
+          -apple-system,
+          'Segoe UI',
+          Roboto,
+          sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      main {
+        max-width: 56rem;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        margin: 0 0 0.25rem;
+      }
+
+      .subtitle {
+        color: var(--text-muted);
+        margin: 0 0 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      label {
+        display: block;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        font-size: 0.9rem;
+      }
+
+      .hint {
+        color: var(--text-muted);
+        font-size: 0.8rem;
+        font-weight: 400;
+        margin-left: 0.25rem;
+      }
+
+      textarea {
+        display: block;
+        width: 100%;
+        min-height: 14rem;
+        padding: 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        background: var(--surface);
+        color: var(--text);
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        resize: vertical;
+        tab-size: 4;
+      }
+
+      textarea:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: -1px;
+      }
+
+      .field {
+        margin-bottom: 1rem;
+      }
+
+      .file-label {
+        font-weight: normal;
+        font-size: 0.85rem;
+      }
+
+      .file-row {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+
+      input[type='text'],
+      select {
+        padding: 0.5rem 0.75rem;
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-family: var(--mono);
+        font-size: 0.85rem;
+        background: var(--surface);
+        color: var(--text);
+      }
+
+      input[type='text'] {
+        width: 100%;
+      }
+
+      input[type='text']:focus,
+      select:focus {
+        outline: 2px solid var(--accent);
+        outline-offset: -1px;
+      }
+
+      button {
+        padding: 0.5rem 1.25rem;
+        border: none;
+        border-radius: 6px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.15s;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: var(--btn-primary-text);
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-hover);
+      }
+
+      .btn-secondary {
+        background: var(--btn-secondary-bg);
+        color: var(--text);
+      }
+
+      .btn-secondary:hover {
+        background: var(--btn-secondary-hover);
+      }
+
+      .btn-secondary:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      .checkbox-label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        font-size: 0.9rem;
+        cursor: pointer;
+      }
+
+      .checkbox-label input[type='checkbox'] {
+        width: 1.1rem;
+        height: 1.1rem;
+        cursor: pointer;
+      }
+
+      .actions {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        margin-bottom: 1rem;
+      }
+
+      .error {
+        color: var(--error);
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .stats {
+        color: var(--success);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      .output-section {
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid var(--border);
+      }
+
+      .output-actions {
+        display: flex;
+        gap: 0.5rem;
+        margin-top: 0.5rem;
+      }
+
+      footer {
+        margin-top: 2rem;
+        padding-top: 1rem;
+        border-top: 1px solid var(--border);
+        color: var(--text-muted);
+        font-size: 0.8rem;
+      }
+
+      footer a {
+        color: var(--accent);
+        text-decoration: underline;
+      }
+
+      footer a:hover {
+        text-decoration: none;
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        button {
+          transition: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1><img src="images/chain.svg" alt="" width="28" height="28" style="vertical-align:middle;margin-right:0.4rem;">KiCad Lib Chainer</h1>
+      <p class="subtitle">
+        Convert old KiCad library tables (v9 and earlier) to chained format. Stock libraries are
+        replaced with a single chained table entry.
+      </p>
+
+      <div class="field">
+        <label for="input-area">
+          Library table input
+          <span class="hint">(paste contents or upload a file)</span>
+        </label>
+        <div class="file-row">
+          <label for="file-input" class="file-label">Upload a file:</label>
+          <input type="file" id="file-input"/>
+        </div>
+        <textarea
+          id="input-area"
+          placeholder="Paste your fp-lib-table or sym-lib-table contents here..."
+          spellcheck="false"
+        ></textarea>
+      </div>
+
+      <div class="field">
+        <label for="platform-select">
+          Platform
+          <span class="hint">(sets default system library path)</span>
+        </label>
+        <select id="platform-select">
+          <option value="linux">Linux</option>
+          <option value="macos">macOS</option>
+          <option value="macports">macOS (MacPorts)</option>
+          <option value="windows">Windows</option>
+        </select>
+      </div>
+
+      <div class="field">
+        <label for="chain-path">
+          System library table path
+          <span class="hint">(edit if your install location differs)</span>
+        </label>
+        <input type="text" id="chain-path" placeholder="/usr/share/kicad/footprints/fp-lib-table" />
+      </div>
+
+      <div class="field">
+        <label class="checkbox-label">
+          <input type="checkbox" id="split-user-libs" checked />
+          Separate user libraries into their own chained table
+        </label>
+      </div>
+
+      <div class="field" id="user-lib-path-field">
+        <label for="user-lib-path">
+          User library table path
+          <span class="hint">(where you will save the user table file)</span>
+        </label>
+        <input type="text" id="user-lib-path" placeholder="/home/user/kicad-libs/user-lib-table" />
+      </div>
+
+      <div class="actions">
+        <button class="btn-primary" id="convert-btn">Convert</button>
+      </div>
+
+      <div id="error-area" class="error" role="alert" hidden></div>
+
+      <div class="output-section">
+        <div id="stats-area" class="stats" role="status" hidden></div>
+        <label for="output-area">Main table output</label>
+        <textarea id="output-area" readonly spellcheck="false"></textarea>
+        <div class="output-actions">
+          <button class="btn-secondary" id="copy-btn" disabled>Copy to Clipboard</button>
+          <button class="btn-secondary" id="download-btn" disabled>Download</button>
+        </div>
+      </div>
+
+      <div class="output-section" id="user-output-section" hidden>
+        <label for="user-output-area">User library table output</label>
+        <textarea id="user-output-area" readonly spellcheck="false"></textarea>
+        <div class="output-actions">
+          <button class="btn-secondary" id="copy-user-btn" disabled>Copy to Clipboard</button>
+          <button class="btn-secondary" id="download-user-btn" disabled>Download</button>
+        </div>
+      </div>
+
+      <footer>
+        <p>
+          All processing happens in your browser. Nothing is sent to any server. See the
+          <a href="https://github.com/johnbeard/kicad-lib-chainer">source on GitHub</a>.
+        </p>
+      </footer>
+    </main>
+
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>
