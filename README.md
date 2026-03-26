@@ -1,5 +1,7 @@
 ## KiCad lib chainer
 
+**[Try it: johnbeard.github.io/kicad-lib-chainer](https://johnbeard.github.io/kicad-lib-chainer/)**
+
 KiCad lib chainer is a little web app that takes your old (v9 and earlier) KiCad library tables
 and splits them into "KiCad stock libraries" and "your libraries". The stock libraries are replaced by a chained
 entry.
